@@ -20,6 +20,13 @@ if not settings.status[-1]:
 
 if st.button("Create survey"):
     nav_page("Create_survey")
+
+if st.button("View current survey responses"):
+    nav_page("View_Responses")
+
+if st.button("Answer current surveys"):
+    nav_page("Answer_surveys")
+
 elif st.button("Log out"):
     nav_page("")
     settings.status.append(False)

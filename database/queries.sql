@@ -86,3 +86,7 @@ UNION
 SELECT id, content
 FROM poll_answer
 WHERE pollid = 2;
+
+SELECT T.content, T.Uid, poll_question.content from poll_question join (SELECT S.pollId as Pid, S.questionId as Qid, S.userID as Uid, content from poll_answer join (SELECT pollId, answerId, questionId, userID FROM 
+poll join poll_vote where poll.id = poll_vote.pollId and poll.title = 'Favourite anime') as S where poll_answer.id = S.answerId) as T where poll_question.id = T.Qid order by T.QId;
+
