@@ -19,11 +19,6 @@ CREATE TABLE `user` (
   `mobile` varchar(15) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `passwordHash` varchar(32) NOT NULL,
-  `host` tinyint(1) NOT NULL DEFAULT '0',
-  `registeredAt` datetime NOT NULL,
-  `lastLogin` datetime DEFAULT NULL,
-  `intro` tinytext,
-  `profile` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_mobile` (`mobile`),
   UNIQUE KEY `uq_email` (`email`)
@@ -42,10 +37,6 @@ CREATE TABLE `poll` (
   `hostId` bigint(20) NOT NULL,
   `title` varchar(75) NOT NULL,
   `summary` tinytext,
-  `published` tinyint(1) NOT NULL DEFAULT '0',
-  `createdAt` datetime NOT NULL,
-  `startsAt` datetime DEFAULT NULL,
-  `endsAt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_poll_host` FOREIGN KEY (`hostId`) REFERENCES `user` (`id`)
 );
@@ -90,7 +81,6 @@ CREATE TABLE `poll_question` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `pollId` bigint(20) NOT NULL,
   `type` varchar(50) NOT NULL,
-  `createdAt` datetime NOT NULL,
   `content` text,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_question_poll` FOREIGN KEY (`pollId`) REFERENCES `poll` (`id`)
@@ -106,7 +96,6 @@ CREATE TABLE `poll_answer` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `pollId` bigint(20) NOT NULL,
   `questionId` bigint(20) NOT NULL,
-  `createdAt` datetime NOT NULL,
   `content` text,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_answer_poll` FOREIGN KEY (`pollId`) REFERENCES `poll` (`id`),
@@ -125,7 +114,6 @@ CREATE TABLE `poll_vote` (
   `questionId` bigint(20) NOT NULL,
   `answerId` bigint(20) DEFAULT NULL,
   `userId` bigint(20) NOT NULL,
-  `createdAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_vote_answer` FOREIGN KEY (`answerId`) REFERENCES `poll_answer` (`id`),
   CONSTRAINT `fk_vote_poll` FOREIGN KEY (`pollId`) REFERENCES `poll` (`id`),
@@ -133,13 +121,4 @@ CREATE TABLE `poll_vote` (
   CONSTRAINT `fk_vote_user` FOREIGN KEY (`userId`) REFERENCES `user` (`id`)
 );
 
--- Execution plan --------------------------------
--- Show all answers for pollid = 2, questionid = 5
-SELECT Q.content as "Question", P.content as "Answer"
-FROM poll_answer as P LEFT JOIN poll_question as Q
-on P.pollid = Q.pollid
-WHERE P.pollid = 2 and P.questionid = 5;
 
-SELECT Q.content, A.content
-FROM poll_question as Q, poll_answer as A
-WHERE A.questionid = 5 AND A.pollid = 2;

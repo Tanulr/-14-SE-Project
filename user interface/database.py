@@ -17,3 +17,15 @@ def sqllogin(userID, password):
     if len(df)==0:
         return False
     return True
+
+def sqlsignup(userID, username, phone, email, password):
+    c.execute('INSERT INTO USER(id, name, mobile, email, passwordHash) VALUES (%s, %s, %s, %s, %s)', (userID, username, phone, email, password))
+
+def create_survey():
+    return
+
+def view_survey():
+    return
+
+def answer_survey():
+    return 

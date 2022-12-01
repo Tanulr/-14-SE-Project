@@ -1,0 +1,2 @@
+global status
+status = [False]
