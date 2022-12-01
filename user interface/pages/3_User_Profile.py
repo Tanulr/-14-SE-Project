@@ -18,7 +18,8 @@ if not settings.status[-1]:
     if st.button("Sign up page"):
         nav_page("Sign_up")
 
-
+if st.button("Create survey"):
+    nav_page("Create_survey")
 elif st.button("Log out"):
     nav_page("")
     settings.status.append(False)

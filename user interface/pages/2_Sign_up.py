@@ -19,6 +19,7 @@ if settings.status[-1]:
 def Signup(userID, username, phone, email, password):
     sqlsignup(userID, username, phone, email, password)
     settings.status.append(True)
+    settings.userid.append(userID)
     nav_page("User_Profile")
 
 username = st.text_input("Username")

@@ -19,6 +19,7 @@ if settings.status[-1]:
 def Login(username, password):
     if sqllogin(username, password):
         settings.status.append(True)
+        settings.userid.append(username)
         st.success("Login successful")
         nav_page("User_Profile")
             
